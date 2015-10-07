@@ -1,0 +1,13 @@
+{
+    "name"      : "Bamboo-test",
+    "version"   : "*",
+    "author"   : "github:sergot",
+    "description"   : "Perl 6 dependency manager - testing",
+    "depends"   : [
+        "Sth"
+    ],
+    "provides" : {
+        "Bamboo" : "lib/Bamboo.pm6"
+    },
+    "source-url"    : "git://github.com/sergot/bamboo.git"
+}
