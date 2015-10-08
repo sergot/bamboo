@@ -37,10 +37,14 @@ method install() {
 
     my $ecosystem = Panda::Ecosystem.new(
         statefile    => "{$*CWD}/state",
-        projectsfile => "", # TODO
+        projectsfile => ""
     );
     my $panda = Panda.new(
         ecosystem => $ecosystem,
         installer => Panda::Installer.new(destdir => "{$*CWD}/lib")
     );
+
+    for @.dependencies -> $module {
+        $panda.resolve($module);
+    }
 }
