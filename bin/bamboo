@@ -3,4 +3,6 @@ use v6;
 
 use Bamboo;
 
+my $bamboo = Bamboo.new;
 
+$bamboo.install;
