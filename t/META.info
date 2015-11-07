@@ -4,10 +4,9 @@
     "author"   : "github:sergot",
     "description"   : "Perl 6 dependency manager - testing",
     "depends"   : [
-        "Sth"
+        "HTTP::UserAgent"
     ],
     "provides" : {
-        "Bamboo" : "lib/Bamboo.pm6"
     },
     "source-url"    : "git://github.com/sergot/bamboo.git"
 }
