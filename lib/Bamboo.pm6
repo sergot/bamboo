@@ -3,6 +3,7 @@ unit class Bamboo;
 use v6;
 
 use Panda;
+use Panda::App;
 use JSON::Fast;
 
 my @config-files = "META.info", ".pandafile";
@@ -35,18 +36,14 @@ submethod BUILD(:$path = ".") {
 method install() {
     say "===> Installing...";
 
-    my $ecosystem = Panda::Ecosystem.new(
-        statefile    => "{$*CWD}/state",
-        # XXX : fix this, should contain real projects.json
-        projectsfile => "{$*CWD}/empty"
-    );
     my $panda = Panda.new(
-        ecosystem => $ecosystem,
+        ecosystem => make-default-ecosystem(),
+        # XXX : destdir doesn't work
         installer => Panda::Installer.new(destdir => "{$*CWD}/lib")
     );
 
     for @.dependencies -> $module {
-        $panda.resolve($module)
+        $panda.resolve($module, :action<install>)
             unless $module ~~ "Panda"; # Panda should be installed, right? :)
     }
 }

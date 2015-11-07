@@ -4,7 +4,7 @@
     "author"   : "github:sergot",
     "description"   : "Perl 6 dependency manager - testing",
     "depends"   : [
-        "HTTP::UserAgent"
+        "URI"
     ],
     "provides" : {
     },
