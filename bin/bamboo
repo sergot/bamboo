@@ -3,11 +3,12 @@ use v6;
 
 use Bamboo;
 
-multi sub MAIN('install') {
-    my $bamboo = Bamboo.new;
+multi sub MAIN('install', :$path = '.') {
+    my $bamboo = Bamboo.new(:$path);
     $bamboo.install;
 }
 
 multi sub MAIN('init') {
     # TODO : generate META.info
+    die "NYI";
 }

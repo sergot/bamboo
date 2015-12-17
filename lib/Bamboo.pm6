@@ -8,6 +8,8 @@ use JSON::Fast;
 
 my @config-files = "META.info", ".pandafile";
 
+has $!prefix;
+has $!path;
 has $.project-name;
 has $.author;
 has $.version;
@@ -15,9 +17,9 @@ has $.source-url;
 has $.description;
 has @.dependencies;
 
-submethod BUILD(:$path = ".") {
-    if ($path ~ "/META.info").IO.e {
-        my $meta = from-json(slurp($path ~ "/META.info"));
+submethod BUILD(:$!prefix = "$*CWD", :$!path = '.') {
+    if ($!path ~ "/META.info").IO.e {
+        my $meta = from-json(slurp($!path ~ "/META.info"));
         $!project-name = $meta<name>;
         $!author = $meta<author>;
         $!version = $meta<version>;
@@ -25,11 +27,11 @@ submethod BUILD(:$path = ".") {
         $!description = $meta<description>;
         @!dependencies = $meta<depends>.flat;
     }
-    elsif ($path ~ "/.pandafile").IO.e {
-        @!dependencies = ($path ~ "/.pandafile").IO.lines;
+    elsif ($!path ~ "/.pandafile").IO.e {
+        @!dependencies = ($!path ~ "/.pandafile").IO.lines;
     }
     else {
-        die "There is no .pandafile nor META.info in given path."
+        die "There is no .pandafile nor META.info in given path ($!path)."
     }
 }
 
@@ -38,8 +40,7 @@ method install() {
 
     my $panda = Panda.new(
         ecosystem => make-default-ecosystem(),
-        # XXX : destdir doesn't work
-        installer => Panda::Installer.new(destdir => "{$*CWD}/lib")
+        installer => Panda::Installer.new(prefix => $!prefix)
     );
 
     for @.dependencies -> $module {
