@@ -30,12 +30,11 @@ submethod BUILD(:$!prefix = "$*CWD", :$!path = '.') {
     elsif ($!path ~ "/.pandafile").IO.e {
         @!dependencies = ($!path ~ "/.pandafile").IO.lines;
     }
-    else {
-        die "There is no .pandafile nor META.info in given path ($!path)."
-    }
 }
 
 method install() {
+    die "Could not find dependencies to install." unless @.dependencies;
+
     say "===> Installing...";
 
     my $panda = Panda.new(
@@ -45,6 +44,11 @@ method install() {
 
     for @.dependencies -> $module {
         $panda.resolve($module, :action<install>)
-            unless $module ~~ "Panda"; # Panda should be installed, right? :)
+            unless $module ~~ "Panda"; # Panda should be already installed, right? :)
     }
+}
+
+method generate-meta(%meta) {
+    # TODO: behave differently if META.info already exists?
+    spurt $!path ~ '/' ~ @config-files[0], to-json(%meta), :createonly;
 }
