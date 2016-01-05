@@ -33,6 +33,9 @@ sub get-dir() {
     my $dir = $*CWD.Str;
 
     $dir .= substr(rindex($dir, '/') + 1);
+    $dir ~~ s/'-'/::/;
+
+    return $dir;
 }
 
 sub get-dependencies(@files) {
