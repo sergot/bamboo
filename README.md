@@ -25,6 +25,13 @@ to change the dependency-list file location, use `--path` parameter:
 
 		bamboo --path=src install
 
+
+To generate META.info, write:
+
+		bamboo init
+
+if you do this after you create files in `lib/` it generates *depends* and *provides* sections for you, automatically
+
 and done. Enjoy! :)
 
 # TODO
