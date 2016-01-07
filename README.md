@@ -33,7 +33,3 @@ To generate META.info, write:
 if you do this after you create files in `lib/` it generates *depends* and *provides* sections for you, automatically
 
 and done. Enjoy! :)
-
-# TODO
-
-- implement bin/bamboo init
