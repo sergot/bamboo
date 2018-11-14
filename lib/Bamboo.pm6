@@ -1,6 +1,6 @@
-unit class Bamboo;
-
 use v6;
+
+unit class Bamboo;
 
 use Panda;
 use Panda::App;
